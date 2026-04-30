@@ -1,4 +1,3 @@
-//
 #include <iostream>
 #include <cstring>
 using namespace std;
@@ -23,13 +22,13 @@ int bookCount = 0;
 void addBook();
 
 //searching books by title
-void searchByTitle(const Book library[], int bookCount, const char title[]);
+void searchByTitle();
 
 //searching books by author
-void searchByAuthor(const Book library[], int bookCount, const char author[]);
+void searchByAuthor();
 
 //displaying all books
-void displayAllBooks(const Book library[], int bookCount); 
+void displayAllBooks(); 
 
 //checking if ISBN is valid
 bool isValidISBN13(const char isbn[]);
@@ -38,12 +37,19 @@ bool isValidISBN13(const char isbn[]);
 bool isUniqueISBN(const char isbn[]);
 
 //borrowing the book
-void borrowBook(Book library[], int bookCount); 
+void borrowBook(); 
 
 //returning the book
-void returnBook(Book library[], int bookCount); 
+void returnBook(); 
 
+//sorting books
+void sortbooks();
 
+//sorting by title
+void sortbytitle();
+
+//sorting by author
+void sortbyauthor();
 
 int main(){
     //menu
@@ -56,8 +62,9 @@ int main(){
         cout <<"4. Display All Books\n";
         cout <<"5. Borrow Book\n";
         cout <<"6. Return Book\n";
-        cout <<"7. Exit!\n";
-        cout <<"Choice(Pick a number betweeen 1 and 7)\n";
+        cout <<"7. Sort Books\n";
+        cout <<"8. Exit!\n";
+        cout <<"Choice(Pick a number betweeen 1 and 8):";
 
         cin>>choice;
         cin.ignore();
@@ -66,13 +73,14 @@ int main(){
             case 1:addBook();break;
             case 2:searchByTitle();break;
             case 3:searchByAuthor();break;
-            case 4:displayAllBooks(library,bookCount); break;
-            case 5:borrowBook(library,bookCount); break;
-            case 6:returnBook(library,bookCount); break;
-            case 7:cout<<"Thank you!!\n";break;
+            case 4:displayAllBooks(); break;
+            case 5:borrowBook(); break;
+            case 6:returnBook(); break;
+            case 7:sortbooks(); break;
+            case 8:cout<<"Thank you!!\n";break;
             default:cout <<"Invalid Input!\n";break;
         }
-    }while (choice !=7);
+    }while (choice !=8);
     return 0;
 }
 
@@ -273,4 +281,49 @@ void returnBook() {
     }
 
     cout << "Book not found.\n";
+}
+
+void sortbooks(){
+    int choice;
+    cout<<"Sort by:\n1. Title\n2. Author\nChoice: ";
+    cin>>choice;
+    cin.ignore(1000,'\n');
+
+    switch (choice){
+        case 1:sortbytitle(); 
+        cout<<"\nBooks sorted by title:\n";
+        displayAllBooks();
+        break;
+
+        case 2:sortbyauthor();
+        cout<<"\nBooks sorted by author:\n";
+        displayAllBooks();
+        break;
+
+        default:cout<<"Invalid choice!!\n"; break;
+    }
+}
+
+void sortbytitle(){
+    for (int i = 0; i < bookCount - 1; i++) {
+        for (int j = 0; j < bookCount - i - 1; j++) {
+            if (strcmp(library[j].title, library[j + 1].title) > 0) {
+                Book temp = library[j];
+                library[j] = library[j + 1];
+                library[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void sortbyauthor(){
+    for (int i = 0; i < bookCount - 1; i++) {
+        for (int j = 0; j < bookCount - i - 1; j++) {
+            if (strcmp(library[j].author, library[j + 1].author) < 0) {
+                Book temp = library[j];
+                library[j] = library[j + 1];
+                library[j + 1] = temp;
+            }
+        }
+    }
 }
