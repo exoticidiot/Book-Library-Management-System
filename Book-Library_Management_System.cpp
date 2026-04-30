@@ -149,7 +149,7 @@ void addBook(){
     cin.getline(b.ISBN,20);
 
     //checking if the fields are empty
-    if (strlen(b.title)==0||strlen(b.author)==0){
+    if (strlen(b.title)==0||strlen(b.author)==0||strlen(b.ISBN)==0){
         cout <<"Error!!Field cannot be empty!!\n";
         return;
     }
